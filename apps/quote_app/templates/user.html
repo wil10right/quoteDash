@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+
+    <style>
+        .reg_block,.login_block{
+            display: inline-block;
+            vertical-align: top;
+            margin: 20px;
+        }
+        ul,li{
+            list-style-type: none;
+        }
+        body{
+            padding: 20px;
+        }
+        .quoteblock{
+            padding: 10px;
+            border: gray 3px solid;
+            background-color: bisque;
+            width: 400px;
+            height: auto;
+            margin-bottom: 10px;
+        }
+    </style>
+
+    <title>QuoteDash User Page: {{request.session.first_name}}</title>
+</head>
+<body>
+    <header>
+        <a href="/home">Home</a> |
+        <a href="/edit/{{request.session.user_id}}">Edit Info</a> |
+        <a href="/logout">Logout</a> |
+        <hr>
+    </header>
+    <h1>Quotes posted by this poster:</h1>
+    <hr>
+    <!-- loop for quotes by user -->
+    {%for q in quotes%}
+        <div class="quoteblock">
+            <ul>
+                <li>
+                    <h4>{{q.author}}:</h4>
+                    <p>"{{q.quote}}"</p>
+                    <h6>Posted By: {{q.user.first_name}} {{q.user.last_name}}</h6>
+                    {% if q.user.id == request.session.user_id %}
+                        <a href="/delete/{{q.id}}">Delete Quote</a>
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+    {%endfor%}
+    <!-- <a href="edit/{{request.session.user_id}}">Edit</a> -->
+</body>
+</html>
