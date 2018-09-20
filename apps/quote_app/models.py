@@ -82,7 +82,7 @@ class User(models.Model):
     objects = UserManager()
 
     def __repr__(self):
-        return "<User object: {} {} alias:{}>".format(self.first_name,self.last_name,self.alias)
+        return "<User object: {} {} alias:{}>".format(self.first_name,self.last_name)
 
 class Quote(models.Model):
     author = models.CharField(max_length=255)
