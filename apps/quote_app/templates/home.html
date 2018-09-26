@@ -32,9 +32,9 @@
             {%csrf_token%}
             <input type="hidden" name="user_id" value="{{request.session.user_id}}">
             <label for="author">Author:</label><br>
-            <input type="text" name="author"><br>
+            <input class="quote" type="text" name="author"><br>
             <label for="quote">Quote:</label><br>
-            <textarea cols="40" rows="5" name="quote"></textarea><br>
+            <textarea class="quote" cols="40" rows="5" name="quote"></textarea><br>
             <input class="btn-primary" type="submit" value="Submit Quote">
         </form>
     </div>
@@ -60,7 +60,7 @@
                     <form action="/like/{{request.session.user_id}}" method="POST">
                         {%csrf_token%}
                         <input type="hidden" name="like" value="{{q.id}}">
-                        <input type="submit" value="Like!">
+                        <input id="gold" type="submit" value="Like!">
                     </form>
                     {% endif %}
                     <br>

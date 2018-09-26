@@ -14,11 +14,12 @@ body{
 
 .quoteblock{
     padding: 10px;
-    border: gray 3px solid;
-    background-color: bisque;
+    border: rgba(0, 0, 128, 0.699) 3px solid;
+    background-color: aliceblue;
     width: 400px;
     height: auto;
     margin-bottom: 10px;
+    border-radius: 5px;
 }
 
 .enter{
@@ -33,4 +34,20 @@ body{
 
 hr{
     margin: 5px;
+}
+
+input, textarea{
+    background-color: aliceblue;
+    color: navy;
+}
+
+textarea.quote, input.quote{
+    width: 400px;
+}
+
+#gold{
+    background-image: linear-gradient(rgb(255, 229, 85), rgb(196, 149, 30));
+    font-weight: bolder;
+    border: solid brown 1px;
+    border-radius: 3px;
 }
