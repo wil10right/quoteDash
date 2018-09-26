@@ -1,16 +1,18 @@
 from django.shortcuts import render, redirect
 from . import views
-from .models import User, UserManager, Like, Quote
+from .models import User, UserManager, Quote
 from django.contrib import messages
+from django.db.models import Count
 
 # Create your views here.
 def index(request):
     return render(request,'index.html')
 
 def home(request):
-    quotes = Quote.objects.all()
+    quotes = Quote.objects.all().annotate(likeCount = Count('like'))
     this_quote = Quote.objects.filter()
     this_user = User.objects.get(id=request.session['user_id'])
+    
     return render(request,'home.html',{
         'quotes': quotes
     })
@@ -18,6 +20,7 @@ def home(request):
 def user(request, id):
     this_user = User.objects.get(id=id)
     user_qs = Quote.objects.filter(user=this_user.id)
+
     return render(request,'user.html',{
         'quotes':user_qs
     })
@@ -30,6 +33,7 @@ def editUser(request, id):
     if type(result) == dict:
         for key, value in result.items():
             messages.error(request, value)
+
         return redirect('/edit/{}'.format(id))
     else:
         this_user = User.objects.get(id=request.session['user_id'])
@@ -40,6 +44,7 @@ def editUser(request, id):
         request.session['user_first']=this_user.first_name
         request.session['user_last']=this_user.last_name
         request.session['user_email']=this_user.email
+
         return redirect('/home')
 
 def process(request):
@@ -48,18 +53,21 @@ def process(request):
         if type(result) == dict:
             for key, value in result.items():
                 messages.error(request, value)
+
             return redirect('/')
         else:
             request.session['user_id'] = result.id
             request.session['user_first'] = result.first_name
             request.session['user_last'] = result.last_name
             request.session['email'] = result.email
+
             return redirect('/home')
 
     if request.POST['reg'] == 'login':
         result = User.objects.userValidator(request.POST)
         if type(result) == str:
             messages.error(request,result)
+
             return redirect('/')
         else:
             request.session['user_id'] = result.id 
@@ -67,6 +75,7 @@ def process(request):
             request.session['user_last'] = result.last_name
             request.session['email'] = result.email
             print(request.session['user_id'])
+
             return redirect('/home')
 
 def addQuote(request):
@@ -74,6 +83,7 @@ def addQuote(request):
     if type(result) == dict:
         for key, value in result.items():
                 messages.error(request, value)
+
         return redirect('/home')
     if type(result) != dict:
         quoted = Quote.objects.create(
@@ -81,6 +91,7 @@ def addQuote(request):
             quote = request.POST['quote'],
             user = User.objects.get(id=request.session['user_id'])
         )
+
         return redirect('/home')
 
 def delete(request, id):
@@ -91,16 +102,12 @@ def delete(request, id):
 
 def like(request, uid, qid):
     this_user = User.objects.get(id=uid)
-    is_liked = Like.objects.filter(user=uid).filter(quote=qid)
     this_quote = Quote.objects.get(id=request.POST['like'])
-
-    if is_liked:
-        pass
-    else:
-        likey = Like.objects.create(user=this_user,quote=this_quote)
+    this_quote.like.add(this_user)
 
     return redirect('/home')
 
 def logout(request):
     request.session.clear()
+
     return redirect('/')
