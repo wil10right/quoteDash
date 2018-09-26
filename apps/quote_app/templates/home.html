@@ -51,19 +51,20 @@
                     <h4>{{q.author}}:</h4>
                     <p>"{{q.quote}}"</p>
                     <a href="user/{{q.user.id}}"><h6>Posted By: {{q.user.first_name}} {{q.user.last_name}}</h6></a>
-
+                    
                     {% if q.user.id == request.session.user_id %}
-                        <a href="/delete/{{q.id}}">Delete Quote</a>
+                    <a href="/delete/{{q.id}}">Delete Quote</a>
                     {% endif %}
-
+                    
                     {% if q.user.id != request.session.user_id %}
-                        <form action="/like/{{request.session.user_id}}/{{q.id}}" method="POST">
-                            {%csrf_token%}
-                            <input type="hidden" name="like" value="{{q.id}}">
-                            <input type="submit" value="Like!">
-                        </form>
-                        {% endif %}
-                        
+                    <form action="/like/{{request.session.user_id}}/{{q.id}}" method="POST">
+                        {%csrf_token%}
+                        <input type="hidden" name="like" value="{{q.id}}">
+                        <input type="submit" value="Like!">
+                    </form>
+                    {% endif %}
+                    <br>
+                    <h6>Likes: {{q.likeCount}}</h6>
                 </li>
             </ul>
             </div>

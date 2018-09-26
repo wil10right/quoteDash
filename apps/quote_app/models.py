@@ -84,7 +84,4 @@ class Quote(models.Model):
     author = models.CharField(max_length=255)
     quote = models.CharField(max_length=255)
     user = models.ForeignKey(User, related_name="quotes")
-
-class Like(models.Model):
-    user = models.ForeignKey(User, related_name="likes")
-    quote = models.ForeignKey(Quote, related_name="liked")
+    like = models.ManyToManyField(User, related_name="liked_quotes")
