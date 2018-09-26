@@ -57,7 +57,7 @@
                     {% endif %}
                     
                     {% if q.user.id != request.session.user_id %}
-                    <form action="/like/{{request.session.user_id}}/{{q.id}}" method="POST">
+                    <form action="/like/{{request.session.user_id}}" method="POST">
                         {%csrf_token%}
                         <input type="hidden" name="like" value="{{q.id}}">
                         <input type="submit" value="Like!">

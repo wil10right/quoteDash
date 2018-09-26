@@ -100,7 +100,8 @@ def delete(request, id):
 
     return redirect('/home')
 
-def like(request, uid, qid):
+def like(request, uid):
+    print("winter clothes")
     this_user = User.objects.get(id=uid)
     this_quote = Quote.objects.get(id=request.POST['like'])
     this_quote.like.add(this_user)

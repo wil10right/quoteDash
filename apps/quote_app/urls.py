@@ -10,6 +10,6 @@ urlpatterns=[
     url(r'^editUser/(?P<id>\d+$)$', views.editUser),
     url(r'^process$', views.process),
     url(r'^addQuote$', views.addQuote),
-    url(r'^like/(?P<uid>\d)/(?P<qid>\d+$)$', views.like),
+    url(r'^like/(?P<uid>\d+$)$', views.like),
     url(r'^logout$', views.logout)
 ]
