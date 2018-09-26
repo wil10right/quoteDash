@@ -3,14 +3,12 @@ from django.db import models
 import bcrypt
 import re
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
+
 # Create your models here.
 class UserManager(models.Manager):
     def userValidator(self, postData):
-        # print("POST_DATA",postData)
         errors = {}
         emailcheck = User.objects.all().values_list('email',flat=True)
-        # print(emailcheck)
-        # print(errors)
         if postData['reg'] == 'new':
             if len(postData['first'])<3:
                 errors['first']="First name must have more than 3 characters."
@@ -25,7 +23,6 @@ class UserManager(models.Manager):
             if postData['pw'] != postData['pc']:
                 errors['passwrong']="Password confirmation fail"
             if errors:
-                # print(errors)
                 return errors
             else:
                 hash = bcrypt.hashpw(postData['pw'].encode(), bcrypt.gensalt())
@@ -40,7 +37,6 @@ class UserManager(models.Manager):
         if postData['reg'] == 'login':
             # filter always returns a list
             challenge = User.objects.filter(email=postData['email'])
-            # print(challenge)
             if len(challenge):
                 if bcrypt.checkpw(postData['pw'].encode(), challenge[0].password.encode()):
                     return challenge[0]
@@ -59,11 +55,11 @@ class UserManager(models.Manager):
     
     def editValidator(self, postData):
         errors = {}
-        if len(postData['first']) > 1:
+        if len(postData['first']) < 1:
             errors['first_len']="Name cannot be left blank"
-        if len(postData['last']) > 1:
+        if len(postData['last']) < 1:
             errors['last_len']="Name cannot be left blank"
-        if len(postData['email']) > 1:
+        if len(postData['email']) < 1:
             errors['email_len']="Email cannot be left blank"
         if not EMAIL_REGEX.match(postData['email']):
             errors['email_wrong'] = "Please enter a valid email address"
@@ -82,7 +78,7 @@ class User(models.Model):
     objects = UserManager()
 
     def __repr__(self):
-        return "<User object: {} {} alias:{}>".format(self.first_name,self.last_name)
+        return "<User object: {} {} >".format(self.first_name,self.last_name)
 
 class Quote(models.Model):
     author = models.CharField(max_length=255)

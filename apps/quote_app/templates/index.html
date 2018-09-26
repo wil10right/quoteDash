@@ -1,26 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {%load static%}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-
-    <style>
-        .reg_block,.login_block{
-            display: inline-block;
-            vertical-align: top;
-            margin: 20px;
-        }
-
-        body{
-            padding: 20px;
-        }
-        ul,li{
-            list-style-type: none;
-        }
-    </style>
+    <link type="text/css" rel="stylesheet" href="{% static 'style.css'%}" media="screen,projection" />
 
     <title>QuoteDash</title>
 </head>
@@ -28,8 +15,7 @@
     <h1>Welcome to QuoteDash!</h1>
     <hr>
     {% for message in messages%}
-        <li>{{message}}</li>
-        <hr>
+        <h6 class="error">{{message}}</h6>
     {% endfor%}
     <div class="reg_block">
         <h3>Register here!</h3>
@@ -37,16 +23,16 @@
             {% csrf_token %}
             <input type="hidden" name="reg" value="new">
             <label>First Name:</label><br>
-            <input type="text" name="first"></input><br>
+            <input type="text" name="first"><br>
             <label>Last Name:</label><br>
-            <input type="text" name="last"></input><br>
+            <input type="text" name="last"><br>
             <label>Email Address:</label><br>
-            <input type="text" name="email"></input><br>
+            <input type="text" name="email"><br>
             <label>Password:</label><br>
-            <input type="password" name="pw"></input><br>
+            <input type="password" name="pw"><br>
             <label>Password Confirm:</label><br>
-            <input type="password" name="pc"></input>
-            <input class="btn-primary" type="submit" value="Register"/>
+            <input type="password" name="pc"><br>
+            <input class="btn-primary enter" type="submit" value="Register"/>
         </form>
     </div>
     <div class="login_block">
@@ -55,10 +41,10 @@
             {% csrf_token %}
             <input type="hidden" name="reg" value="login"><br>
             <label>Email Address:</label><br>
-            <input type="text" name="email"></input><br>
+            <input type="text" name="email"><br>
             <label>Password:</label><br>
-            <input type="password" name="pw"></input>
-            <input class="btn-success" type="submit" value="Login"/><br>
+            <input type="password" name="pw"><br>
+            <input class="btn-success enter" type="submit" value="Login"/><br>
         </form>
     </div>
 

@@ -1,0 +1,36 @@
+.reg_block,.login_block{
+    display: inline-block;
+    vertical-align: top;
+    margin: 20px;
+}
+
+ul,li{
+    list-style-type: none;
+}
+
+body{
+    padding: 20px;
+}
+
+.quoteblock{
+    padding: 10px;
+    border: gray 3px solid;
+    background-color: bisque;
+    width: 400px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.enter{
+    width: auto;
+    height: auto;
+    margin: 10px;
+}
+
+.error{
+    color: crimson;
+}
+
+hr{
+    margin: 5px;
+}
